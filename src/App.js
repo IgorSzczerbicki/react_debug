@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import classes from './App.css';
 import Person from './Person/Person'
+import ErrorBoundary from './ErrorBoundary/ErrorBoundary'
 
 class App extends Component {
 
@@ -50,12 +51,13 @@ class App extends Component {
 			persons = (
 				<div>
 					{this.state.persons.map((person, index) => {
-						return <Person
-							key = {person.id}
-							delete ={this.deletePersonHandler.bind(this, index)}
-							name={person.name}
-							age ={person.age}
-							changeName = {(event) => this.nameChangeHandler(event, person.id)} />
+						return <ErrorBoundary key = {person.id}>
+							<Person
+								delete ={this.deletePersonHandler.bind(this, index)}
+								name={person.name}
+								age ={person.age}
+								changeName = {(event) => this.nameChangeHandler(event, person.id)} />
+						</ErrorBoundary>
 					})}
 				</div>
 			);
@@ -71,15 +73,15 @@ class App extends Component {
 		}
 
 		return (
-				<div className={classes.App}>
-					<h1>React Start</h1>
-					<p className={assignedClasses.join(' ')}>Dynamiczne style</p>
-					<button
-						className={btnClass}
-						onClick={this.togglePersonHandler}>Toggle persons
-					</button>
-					{persons}
-				</div>
+			<div className={classes.App}>
+				<h1>React Start</h1>
+				<p className={assignedClasses.join(' ')}>Dynamiczne style</p>
+				<button
+					className={btnClass}
+					onClick={this.togglePersonHandler}>Toggle persons
+				</button>
+				{persons}
+			</div>
 		);
 	}
 }
